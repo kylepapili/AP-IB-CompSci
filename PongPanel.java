@@ -20,26 +20,29 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
     private boolean wPressed = false;
     private boolean sPressed = false;
     
-    private int ballX = 250;
-    private int ballY = 250;
-    private int diameter = 20;
-    private int ballDeltaX = -1;
-    private int ballDeltaY = 3;
+    private float ballX = 250;
+    private float ballY = 250;
+    private float diameter = 20;
+    private float ballDeltaX = -1;
+    private float ballDeltaY = 3;
     
-    private int playerOneX = 25;
-    private int playerOneY = 250;
-    private int playerOneWidth = 10;
-    private int playerOneHeight = 50;
+    private float playerOneX = 25;
+    private float playerOneY = 250;
+    private float playerOneWidth = 10;
+    private float playerOneHeight = 50;
     
-    private int playerTwoX = 465;
-    private int playerTwoY = 250;
-    private int playerTwoWidth = 10;
-    private int playerTwoHeight = 50;
+    private float playerTwoX = 465;
+    private float playerTwoY = 250;
+    private float playerTwoWidth = 10;
+    private float playerTwoHeight = 50;
     
-    private int paddleSpeed = 5;
+    private float paddleSpeed = 5;
     
     private int playerOneScore = 0;
     private int playerTwoScore = 0;
+    
+    //Upgrade Properties
+    private int level = 0;
     
     //construct a PongPanel
     public PongPanel(){
@@ -52,6 +55,10 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         //call step() 60 fps
         Timer timer = new Timer(1000/60, this);
         timer.start();
+        level = 1;
+        ballDeltaX = -1f;
+        paddleSpeed = 5f;
+        System.out.println("Level: " + level);
     }
     
     public void actionPerformed(ActionEvent e){
@@ -87,15 +94,15 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
 
             
             //where will the ball be after it moves?
-            int nextBallLeft = ballX + ballDeltaX;
+            float nextBallLeft = ballX + ballDeltaX;
             
-            int nextBallRight = ballX + diameter + ballDeltaX;
-            int nextBallTop = ballY + ballDeltaY;
-            int nextBallBottom = ballY + diameter + ballDeltaY;
+            float nextBallRight = ballX + diameter + ballDeltaX;
+            float nextBallTop = ballY + ballDeltaY;
+            float nextBallBottom = ballY + diameter + ballDeltaY;
             
-            int playerOneRight = playerOneX + playerOneWidth;
-            int playerOneTop = playerOneY;
-            int playerOneBottom = playerOneY + playerOneHeight;
+            float playerOneRight = playerOneX + playerOneWidth;
+            float playerOneTop = playerOneY;
+            float playerOneBottom = playerOneY + playerOneHeight;
             
             float playerTwoLeft = playerTwoX;
             float playerTwoTop = playerTwoY;
@@ -112,17 +119,19 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                 if (nextBallTop > playerOneBottom || nextBallBottom < playerOneTop) {
                     
                     playerTwoScore ++;
+                    incrimentLevel();
                     
                     if (playerTwoScore == 3) {
                         playing = false;
                         
                         gameOver = true;
+                        level = 0;
                     }
-                        
                     ballX = 250;
                     ballY = 250;
                     }
                     else {
+                        incrimentLevel();
                         ballDeltaX *= -1;
                     }
             }
@@ -133,17 +142,19 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                 if (nextBallTop > playerTwoBottom || nextBallBottom < playerTwoTop) {
                     
                     playerOneScore ++;
-                    
+                    incrimentLevel();
                     if (playerOneScore == 3) {
                         playing = false;
                         gameOver = true;
+                        level = 0;
                     }
                     
                     ballX = 250;
                     ballY = 250;
                     }
                     else {
-                        ballDeltaX *= -1;
+                    incrimentLevel();
+                    ballDeltaX *= -1;
                 }
             }
                 
@@ -156,6 +167,27 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         repaint();
     }
     
+    public void incrimentLevel() {
+        //Incriment Level
+        level+= 1;
+        System.out.println("Level: " + level);
+        
+        
+        //Incriment Ball Speed
+        if(ballDeltaX < 0) {
+            ballDeltaX = ballDeltaX - 0.25f;
+        } else {
+            ballDeltaX = ballDeltaX + 0.25f;
+        }
+        //Incriment Paddle Speed (every other)
+        if ( (level & 1) == 0 ) { 
+            if (paddleSpeed < 10) {
+                paddleSpeed += 0.5f; 
+            }
+        }
+        System.out.println("ballDeltaX: " + ballDeltaX);
+        System.out.println("paddleSpeed: " + paddleSpeed);
+    }
     //paint the game screen
         public void paintComponent(Graphics g){
         
@@ -174,8 +206,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         }
         else if (playing) {
             
-            int playerOneRight = playerOneX + playerOneWidth;
-            int playerTwoLeft = playerTwoX;
+            float playerOneRight = playerOneX + playerOneWidth;
+            float playerTwoLeft = playerTwoX;
             
             //draw dashed line down center
             for (int lineY = 0; lineY < getHeight(); lineY += 50) {
@@ -183,21 +215,37 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
             }
             
             //draw "goal lines" on each side
-            g.drawLine(playerOneRight, 0, playerOneRight, getHeight());
-            g.drawLine(playerTwoLeft, 0, playerTwoLeft, getHeight());
+            int playerOneRightInt = Math.round(playerOneRight);
+            int playerTwoLeftInt = Math.round(playerOneRight);
+            
+            g.drawLine(playerOneRightInt, 0, playerOneRightInt, getHeight());
+            g.drawLine(playerTwoLeftInt, 0, playerTwoLeftInt, getHeight());
             
             //draw the scores
             g.setFont(new Font(Font.DIALOG, Font.BOLD, 36));
             g.drawString(String.valueOf(playerOneScore), 100, 100);
             g.drawString(String.valueOf(playerTwoScore), 400, 100);
             
+            //Convert to Ints
+            int ballXInt = Math.round(ballX);
+            int ballYInt = Math.round(ballY);
+            int playerOneXInt = Math.round(playerOneX);
+            int playerTwoXInt = Math.round(playerTwoX);
+            int diameterInt = Math.round(diameter);
+            int playerOneYInt = Math.round(playerOneY);
+            int playerTwoYInt = Math.round(playerTwoY);
+            int playerOneWidthInt = Math.round(playerOneWidth);
+            int playerOneHeightInt = Math.round(playerOneHeight);
+            int playerTwoWidthInt = Math.round(playerTwoWidth);
+            int playerTwoHeightInt = Math.round(playerTwoHeight);
+            
             //draw the ball
-            g.fillOval(ballX, ballY, diameter, diameter);
+            g.fillOval(ballXInt, ballYInt, diameterInt, diameterInt);
             
             //draw the paddles
-            g.fillRect(playerOneX, playerOneY, playerOneWidth, playerOneHeight);
+            g.fillRect(playerOneXInt, playerOneYInt, playerOneWidthInt, playerOneHeightInt);
             
-            g.fillRect(playerTwoX, playerTwoY, playerTwoWidth, playerTwoHeight);
+            g.fillRect(playerTwoXInt, playerTwoYInt, playerTwoWidthInt, playerTwoHeightInt);
         }
         else if (gameOver) {
             
