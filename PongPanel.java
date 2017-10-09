@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -43,10 +43,12 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
     
     //Upgrade Properties
     private int level = 0;
-    
+    private Random rand = new Random();
+    private Color randomColor = Color.RED;
+    private Boolean startTimer = false;
     //construct a PongPanel
     public PongPanel(){
-        setBackground(Color.BLACK);
+        setBackground(Color.WHITE);
         
         //listen to key presses
         setFocusable(true);
@@ -64,9 +66,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e){
         step();
     }
-    
     public void step(){
-        
         if(playing){
             //move player 1
             if (upPressed) {
@@ -148,7 +148,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                         gameOver = true;
                         level = 0;
                     }
-                    
+                    startTimer = true;
                     ballX = 250;
                     ballY = 250;
                     }
@@ -172,6 +172,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         level+= 1;
         System.out.println("Level: " + level);
         
+        // Java 'Color' class takes 3 floats, from 0 to 1
+            float rC = rand.nextFloat();
+            float gC = rand.nextFloat();
+            float bC = rand.nextFloat();
+        randomColor = new Color(rC, gC, bC);
         
         //Incriment Ball Speed
         if(ballDeltaX < 0) {
@@ -192,7 +197,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         public void paintComponent(Graphics g){
         
         super.paintComponent(g);
-        g.setColor(Color.WHITE);
+        //Random Color
+        
+        g.setColor(randomColor);
         
         if (showTitleScreen) {
             
@@ -301,6 +308,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                 ballY = 250;
                 playerOneScore = 0;
                 playerTwoScore = 0;
+                ballDeltaX = -1;
+                paddleSpeed = 5;
+                
             }
         }
     }
