@@ -46,6 +46,16 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
     private Random rand = new Random();
     private Color randomColor = Color.RED;
     private Boolean startTimer = false;
+    private Boolean displayPowerUp = false;
+    private Boolean powerUpOnScreen = false;
+    private int currentPlayerPosession = 1;
+    private String currentPowerUp = "";
+    private String[] PowerUpOptions = {"Split","Bounce","smallPaddles", "laserShoot"};
+    
+    //Power Ups
+    private int pwrX = 0;
+    private int pwrY = 0;
+    private Color pwrColor = Color.RED;
     //construct a PongPanel
     public PongPanel(){
         setBackground(Color.WHITE);
@@ -120,7 +130,8 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                     
                     playerTwoScore ++;
                     incrimentLevel();
-                    
+                    //Reset ball Speed to 1
+                    ballDeltaX = -1;
                     if (playerTwoScore == 3) {
                         playing = false;
                         
@@ -133,6 +144,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                     else {
                         incrimentLevel();
                         ballDeltaX *= -1;
+                        currentPlayerPosession = 1;
                     }
             }
             
@@ -143,6 +155,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                     
                     playerOneScore ++;
                     incrimentLevel();
+                    
+                    //Reset ball Speed to 1
+                    ballDeltaX = -1;
                     if (playerOneScore == 3) {
                         playing = false;
                         gameOver = true;
@@ -155,6 +170,7 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                     else {
                     incrimentLevel();
                     ballDeltaX *= -1;
+                    currentPlayerPosession = 2;
                 }
             }
                 
@@ -165,6 +181,13 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         
         //stuff has moved, tell this JPanel to repaint itself
         repaint();
+    }
+    
+    public Color randomColor() {
+        float rC = rand.nextFloat();
+        float gC = rand.nextFloat();
+        float bC = rand.nextFloat();
+        return new Color(rC, gC, bC);
     }
     
     public void incrimentLevel() {
@@ -190,9 +213,25 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
                 paddleSpeed += 0.5f; 
             }
         }
+        
+        //Power up every 3rd
+        if ((level & 3) == 0) {
+            System.out.println("Power UP");
+            displayPowerUp();
+        }
         System.out.println("ballDeltaX: " + ballDeltaX);
         System.out.println("paddleSpeed: " + paddleSpeed);
     }
+    //Power Up
+    public void displayPowerUp() {
+        if (!(powerUpOnScreen)) {
+            pwrX = rand.nextInt(450) + 50;
+            pwrY = rand.nextInt(450) + 50;
+            pwrColor = randomColor();
+            displayPowerUp = true;
+        }
+    }
+    
     //paint the game screen
         public void paintComponent(Graphics g){
         
@@ -270,6 +309,19 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
             
             g.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
             g.drawString("Press space to restart.", 150, 400);
+        }
+        //Power Ups
+        //If we are supposed to display a power up
+        if (displayPowerUp) {
+            System.out.println("Trying to make a polygon");
+            System.out.println("X:" + pwrX + "Y: " + pwrY);
+            g.setColor(pwrColor); //Random color for power ups
+            g.fillRect(pwrX, pwrY, 30, 30);
+            powerUpOnScreen = true;
+        }
+        //Check to see if ball will hit power up
+        if (powerUpOnScreen) {
+            if(ballX = powerUP
         }
     }
     
