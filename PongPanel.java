@@ -56,6 +56,9 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
     private int pwrX = 0;
     private int pwrY = 0;
     private Color pwrColor = Color.RED;
+    private int powerUpOption = 0;
+    private Timer pwrTimer = new Timer(500, this);
+    
     //construct a PongPanel
     public PongPanel(){
         setBackground(Color.WHITE);
@@ -179,8 +182,49 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
             ballY += ballDeltaY;
         }
         
+        //Check to see if ball will hit power up
+        System.out.println("X: " + ballX + " " + "Y: " + ballY);
+        System.out.println("pwrX: " + pwrX + " " + "pwrY: " + pwrY);
+        if (displayPowerUp) {
+            if (((ballX == pwrX) || ((ballX < pwrX + 60) && (ballX > pwrX))) && ((ballY == pwrY) || ((ballY < pwrY + 60) && (ballY > pwrY)))) {
+                System.out.println("Contact!!!!");
+                hidePowerUp();
+                enablePowerUp();
+            }   
+        }
+        
+        
         //stuff has moved, tell this JPanel to repaint itself
         repaint();
+    }
+    public void endSuperSpeed() {
+        ballDeltaX = 5;
+    }
+    public void superSpeedBall() {
+        System.out.println("SUPER SPEED");
+        if (ballDeltaX > 0) {
+            ballDeltaX = 7;
+        } else {
+            ballDeltaX = -7;
+        }
+        pwrTimer.start();
+    }
+    public void enablePowerUp() {
+         powerUpOption = new Random().nextInt(2) + 1;
+         if(powerUpOption == 1) {
+             //Super Speed Ball For a Second!
+             superSpeedBall();
+         } else if (powerUpOption == 2) {
+             //Switch Ball Direction
+             ballDeltaX = ballDeltaX * -1;
+         } else if (powerUpOption == 3) {
+             //Bigger Paddle
+             if (ballDeltaX > 0) {
+                 playerOneHeight = 80;
+              } else {
+                  playerTwoHeight = 80;
+              }
+         }
     }
     
     public Color randomColor() {
@@ -217,21 +261,30 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         //Power up every 3rd
         if ((level & 3) == 0) {
             System.out.println("Power UP");
+            playerOneHeight = 50;
+            playerTwoHeight = 50;
             displayPowerUp();
         }
         System.out.println("ballDeltaX: " + ballDeltaX);
         System.out.println("paddleSpeed: " + paddleSpeed);
+        
+        
     }
     //Power Up
     public void displayPowerUp() {
         if (!(powerUpOnScreen)) {
-            pwrX = rand.nextInt(450) + 50;
-            pwrY = rand.nextInt(450) + 50;
+            pwrX = new Random().nextInt(200) + 200;
+            pwrY = new Random().nextInt(400) + 50;
+            System.out.println("pwrX: " + pwrX);
+            System.out.println("pwrY: " + pwrY);
             pwrColor = randomColor();
             displayPowerUp = true;
         }
     }
-    
+    public void hidePowerUp() {
+        powerUpOnScreen = false;
+        displayPowerUp = false;
+    }
     //paint the game screen
         public void paintComponent(Graphics g){
         
@@ -239,6 +292,19 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         //Random Color
         
         g.setColor(randomColor);
+        
+        //Convert to Ints
+            int ballXInt = Math.round(ballX);
+            int ballYInt = Math.round(ballY);
+            int playerOneXInt = Math.round(playerOneX);
+            int playerTwoXInt = Math.round(playerTwoX);
+            int diameterInt = Math.round(diameter);
+            int playerOneYInt = Math.round(playerOneY);
+            int playerTwoYInt = Math.round(playerTwoY);
+            int playerOneWidthInt = Math.round(playerOneWidth);
+            int playerOneHeightInt = Math.round(playerOneHeight);
+            int playerTwoWidthInt = Math.round(playerTwoWidth);
+            int playerTwoHeightInt = Math.round(playerTwoHeight);
         
         if (showTitleScreen) {
             
@@ -272,19 +338,6 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
             g.drawString(String.valueOf(playerOneScore), 100, 100);
             g.drawString(String.valueOf(playerTwoScore), 400, 100);
             
-            //Convert to Ints
-            int ballXInt = Math.round(ballX);
-            int ballYInt = Math.round(ballY);
-            int playerOneXInt = Math.round(playerOneX);
-            int playerTwoXInt = Math.round(playerTwoX);
-            int diameterInt = Math.round(diameter);
-            int playerOneYInt = Math.round(playerOneY);
-            int playerTwoYInt = Math.round(playerTwoY);
-            int playerOneWidthInt = Math.round(playerOneWidth);
-            int playerOneHeightInt = Math.round(playerOneHeight);
-            int playerTwoWidthInt = Math.round(playerTwoWidth);
-            int playerTwoHeightInt = Math.round(playerTwoHeight);
-            
             //draw the ball
             g.fillOval(ballXInt, ballYInt, diameterInt, diameterInt);
             
@@ -313,16 +366,11 @@ public class PongPanel extends JPanel implements ActionListener, KeyListener{
         //Power Ups
         //If we are supposed to display a power up
         if (displayPowerUp) {
-            System.out.println("Trying to make a polygon");
-            System.out.println("X:" + pwrX + "Y: " + pwrY);
             g.setColor(pwrColor); //Random color for power ups
-            g.fillRect(pwrX, pwrY, 30, 30);
+            g.fillRect(pwrX, pwrY, 60, 60);
             powerUpOnScreen = true;
         }
-        //Check to see if ball will hit power up
-        if (powerUpOnScreen) {
-            if(ballX = powerUP
-        }
+        
     }
     
     public void keyTyped(KeyEvent e) {
