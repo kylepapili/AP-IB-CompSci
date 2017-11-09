@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Quiz
+comment1.params=
+comment1.target=Quiz()
+comment2.params=
+comment2.target=void\ askIfReady()
+comment3.params=
+comment3.target=void\ startQuiz()
+comment4.params=questionNumber
+comment4.target=void\ askQuestion(int)
+comment5.params=userAnswer\ correctAnswer
+comment5.target=boolean\ checkAnswer(java.lang.String,\ java.lang.String)
+comment6.params=input
+comment6.target=int\ checkIfReady(java.lang.String)
+comment7.params=message
+comment7.target=void\ say(java.lang.String)
+comment8.params=
+comment8.target=void\ clear()
+comment9.params=time
+comment9.target=void\ waitAndClear(int)
+numComments=10
