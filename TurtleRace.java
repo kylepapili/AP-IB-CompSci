@@ -37,8 +37,7 @@ public class TurtleRace
     public TurtleRace()
     {
         setupRace();
-        //intro();
-        clear();
+        intro();
         executeRace();
         evaluateFinalResults();
     }
@@ -81,8 +80,44 @@ public class TurtleRace
     public void executeRace() {
         while(!winner) {
             int turtleNumber = randomTurtle();
-            turtleArray[turtleNumber].forward(5);
+            //turtleArray[turtleNumber].forward(5);
+            move(turtleArray[turtleNumber], turtleNumber);
             checkForWinner();
+        }
+    }
+
+    public void move(Turtle t, int turtleNumber) {
+        int direction = new Random().nextInt(2) + 0;
+        int degree = new Random().nextInt(10) + 0;
+        int wildCard = new Random().nextInt(200) + 0;
+        if (wildCard == 5) {
+            for (int i=0; i<turtleArray.length; i++) {
+                int wildDirection = new Random().nextInt(2) + 0;
+                turtleArray[i].speed(1);
+                for (int c=0; c<180; c++) {
+                    say("WILDCARD!!!");
+                    if (wildDirection == 1) {
+                        turtleArray[i].right(2);
+                    } else {
+                        turtleArray[i].left(2);
+                    }
+                    turtleArray[i].penColor(colorArray[i]);
+                    turtleArray[i].down();
+                    turtleArray[i].forward(1);
+                    turtleArray[i].up();
+                }
+                turtleArray[i].speed(10);
+            }
+        } else {
+            if (direction == 1) {
+                t.right(degree);
+            } else {
+                t.left(degree);
+            }
+            t.penColor(colorArray[turtleNumber]);
+            t.down();
+            t.forward(5);
+            t.up();
         }
     }
 
@@ -109,11 +144,13 @@ public class TurtleRace
             int positionY = -50 + (50*i);
             turtleArray[i].setPosition(positionX, positionY);
             turtleArray[i].setDirection(0);
+            turtleArray[i].speed(10);
         }
     }
 
     public void drawStartAndFinish() {
         turtleArray[0].up();
+        turtleArray[0].speed(0);
         turtleArray[0].setPosition(-100, 200);
         turtleArray[0].down();
         turtleArray[0].setDirection(-90);
@@ -128,15 +165,18 @@ public class TurtleRace
     }
 
     public void intro() {
+        clear();
         say("Welcome to the turtle race!!!");
-        waitAndClear(3000);
-        say("We will begin the race in...");
         waitAndClear(1000);
+        say("We will begin the race in...");
+        waitAndClear(500);
         say("3");
         waitAndClear(1000);
         say("2");
         waitAndClear(1000);
         say("1");
+        waitAndClear(1000);
+        say("GO!!!");
     }
 
     public void say(String message) {
