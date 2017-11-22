@@ -1,5 +1,6 @@
 
 import java.util.Random;
+import java.util.Scanner;
 /**
  * Write a description of class TurtleRace here.
  *
@@ -19,17 +20,18 @@ public class TurtleRace
         }
 
         public void sayStats() {
-            System.out.println("The " + color + " turtle made it " + position + " steps!");
+            System.out.println("The " + color + " turtle made it " + (position + 100) + " steps!");
         }
     }
 
     // instance variables - replace the example below with your own
-    Turtle[] turtleArray = { new Turtle() , new Turtle() , new Turtle() , new Turtle() , new Turtle()};
-    String[] colorArray = { "Red" , "Blue" , "Green" , "Orange" , "Purple"};
-    int[] finalPositions = { 0, 0, 0, 0, 0};
-    TurtleStat[] finalStatArray = {new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red")};
+    Turtle[] turtleArray = { new Turtle() , new Turtle() , new Turtle() , new Turtle() , new Turtle(), new Turtle()};
+    String[] colorArray = { "Red" , "Blue" , "Green" , "Orange" , "Purple", "Brown"};
+    int[] finalPositions = { 0, 0, 0, 0, 0, 0};
+    TurtleStat[] finalStatArray = {new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red")};
     boolean winner = false;
     int turtleToMove = 0;
+    Scanner sc=new Scanner(System.in);
 
     /**
      * Constructor for objects of class TurtleRace
@@ -40,6 +42,37 @@ public class TurtleRace
         intro();
         executeRace();
         evaluateFinalResults();
+        //askForReRace();
+    }
+
+    public void runProgram() {
+        setupRace();
+        intro();
+        executeRace();
+        evaluateFinalResults();
+    }
+
+    public void askForReRace() {
+        say("Good race, want to go again?");
+        String answer = sc.next();
+        int result = checkIfReady(answer);
+        if(result == 2) {
+            say("Ok, good race. Bye");
+        } else {
+            runProgram();
+            askForReRace();
+        }
+    }
+
+    public int checkIfReady(String input) {
+        String inputCase = input.toLowerCase();
+        if (inputCase.equals( "yes") || inputCase.equals("y") || inputCase.equals( "ya") || inputCase.equals("yup")) {
+            return 1;
+        } else if(inputCase.equals("no") || inputCase.equals("n") || inputCase.equals("nah") || inputCase.equals( "nope")){
+            return 2;
+        } else {
+            return 3;
+        }
     }
 
     public void evaluateFinalResults() {
@@ -53,7 +86,7 @@ public class TurtleRace
         sort();
         clear();
         for (int i =0; i<finalStatArray.length; i++) {
-            System.out.println("The " + finalStatArray[i].color + " turtle made it " + finalStatArray[i].position + " steps.");
+            finalStatArray[i].sayStats();
         }
     }
 
@@ -63,17 +96,17 @@ public class TurtleRace
                 String colorValueOne = finalStatArray[i].color;
                 int valueOne = finalStatArray[i].position;
                 TurtleStat newTurtOne = new TurtleStat(valueOne, colorValueOne);
-                if (i == finalStatArray.length - 1) {
-                    break;
-                } else {
-                    int valueTwo = finalStatArray[i+1].position;
-                    String colorValueTwo = finalStatArray[i+1].color;
-                    TurtleStat newTurtTwo = new TurtleStat(valueTwo, colorValueTwo);
-                    if (!(valueOne > valueTwo)) {
-                        finalStatArray[i] = newTurtTwo;
-                        finalStatArray[i+1] = newTurtOne;
+                    if (i == finalStatArray.length - 1) {
+                        break;
+                    } else {
+                        int valueTwo = finalStatArray[i+1].position;
+                        String colorValueTwo = finalStatArray[i+1].color;
+                        TurtleStat newTurtTwo = new TurtleStat(valueTwo, colorValueTwo);
+                        if (!(valueOne > valueTwo)) {
+                            finalStatArray[i] = newTurtTwo;
+                            finalStatArray[i+1] = newTurtOne;
+                        }
                     }
-                }
             }
         }
     }
