@@ -25,8 +25,8 @@ public class TurtleRace
 
     // instance variables - replace the example below with your own
     Turtle[] turtleArray = { new Turtle() , new Turtle() , new Turtle() , new Turtle() , new Turtle()};
-    String[] colorArray = { "Red" , "Blue" , "Green" , "Orange" , "Purple" };
-    int[] finalPositions = { 0, 0, 0, 0, 0 };
+    String[] colorArray = { "Red" , "Blue" , "Green" , "Orange" , "Purple"};
+    int[] finalPositions = { 0, 0, 0, 0, 0};
     TurtleStat[] finalStatArray = {new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red"), new TurtleStat(0, "Red")};
     boolean winner = false;
     int turtleToMove = 0;
@@ -51,6 +51,7 @@ public class TurtleRace
             finalStatArray[i] = new TurtleStat(thisPosition, thisColor);
         }
         sort();
+        clear();
         for (int i =0; i<finalStatArray.length; i++) {
             System.out.println("The " + finalStatArray[i].color + " turtle made it " + finalStatArray[i].position + " steps.");
         }
@@ -132,7 +133,7 @@ public class TurtleRace
     }
 
     public int randomTurtle() {
-        return new Random().nextInt(5) + 0;
+        return new Random().nextInt(turtleArray.length) + 0;
     }
 
     public void setupRace() {
