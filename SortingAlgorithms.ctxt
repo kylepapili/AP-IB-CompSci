@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.target=SortingAlgorithms
+comment0.text=\n\ Write\ a\ description\ of\ class\ SortingAlgorithms\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment1.params=
+comment1.target=void\ askForSearchNumber()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ SortingAlgorithms\n
+comment10.params=min\ max
+comment10.target=int\ random(int,\ int)
+comment2.params=
+comment2.target=void\ askForArraySize()
+comment3.params=
+comment3.target=SortingAlgorithms()
+comment4.params=greatestToLeast\ arrayToSearch
+comment4.target=int[]\ sortAlgorithm(boolean,\ int[])
+comment5.params=target\ arrayToSearch
+comment5.target=java.lang.String\ sequentialSearch(int,\ int[])
+comment6.params=target\ arrayToSearch
+comment6.target=java.lang.String\ binarySearch(int,\ int[])
+comment7.params=arrayToSort
+comment7.target=java.lang.String\ selectionSort(int[])
+comment8.params=
+comment8.target=void\ clear()
+comment9.params=length\ max
+comment9.target=void\ populateArray(int,\ int)
+numComments=11

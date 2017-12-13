@@ -1,12 +1,6 @@
-
 import java.util.Random;
 import java.util.Scanner;
-/**
- * Write a description of class TurtleRace here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
+
 public class TurtleRace
 {
 
