@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=EvenFibonacciSum
+comment1.params=
+comment1.target=EvenFibonacciSum()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ EvenFibonacciSum\n
+comment2.params=
+comment2.target=java.util.ArrayList\ fibonacciGenerator()
+comment3.params=array
+comment3.target=void\ printArray(int[])
+comment4.params=
+comment4.target=void\ clear()
+numComments=5
