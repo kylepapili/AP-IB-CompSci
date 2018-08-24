@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=PieProblem
+comment1.params=
+comment1.target=PieProblem()
+comment2.params=a\ b\ c\ MyPie
+comment2.target=void\ minimumFlips(int,\ int,\ int,\ PieProblem.pie)
+comment3.params=array
+comment3.target=int\ sum(java.util.ArrayList)
+comment4.params=array
+comment4.target=int\ sum(int[])
+comment5.params=array
+comment5.target=void\ printArray(int[])
+comment6.params=array
+comment6.target=void\ printPieRanges(java.util.ArrayList)
+comment7.params=array
+comment7.target=void\ printArrayList(java.util.ArrayList)
+comment8.params=
+comment8.target=void\ clear()
+numComments=9

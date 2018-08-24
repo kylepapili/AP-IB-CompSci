@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=HighlyDivisbleTriangularNumber
+comment1.params=
+comment1.target=HighlyDivisbleTriangularNumber()
+comment2.params=max
+comment2.target=java.math.BigInteger\ triangularNumberFromMax(java.math.BigInteger)
+comment3.params=number
+comment3.target=int\ NumberOfFactors(java.math.BigInteger)
+comment4.params=array
+comment4.target=int\ sum(java.util.ArrayList)
+comment5.params=array
+comment5.target=int\ sum(int[])
+comment6.params=array
+comment6.target=void\ printArray(int[])
+comment7.params=
+comment7.target=void\ clear()
+numComments=8

@@ -3,42 +3,36 @@ import java.util.*;
 import java.lang.Number;
 import java.math.BigInteger;
 
-/**
- * Write a description of class LargestPrime here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class LargestPrime
-{
 
-    /**
-     * Constructor for objects of class LargestPrime
-     */
-    public LargestPrime()
+public class ThousandFirstPrime
+{
+    public ThousandFirstPrime()
     {
         clear();
-        BigInteger number = new BigInteger("600851475143");
-        BigInteger test = new BigInteger("13195");
-        System.out.println("Largest Prime Factor: " + largestPrimeFactorQuadMethod(number));
+        ArrayList finalArray = primeNumbers(10001);
+        System.out.println(finalArray);
+        int max = finalArray.size();
+        System.out.println("Biggest Prime: " + finalArray.get(max-1));
     }
-
-    public BigInteger largestPrimeFactorQuadMethod(BigInteger number) {
-        BigInteger a = number;
-        BigInteger currentDivisor = new BigInteger("2");
-        BigInteger largestDivisor = new BigInteger("0");
-        while(!(a.equals(BigInteger.ONE))) {
-            if(a.mod(currentDivisor).equals(BigInteger.ZERO)) { //a is divisible by b
-                a = a.divide(currentDivisor);
-            } else {
-                currentDivisor = currentDivisor.add(BigInteger.ONE);
+    
+    public ArrayList primeNumbers(int max) {
+        ArrayList returnArray = new ArrayList();
+        BigInteger currentMax = BigInteger.ZERO;
+        
+        for(int i=0; i<(max + 1); i++) {
+            boolean notPrime = true;
+            while (notPrime) {
+                //System.out.print(currentMax + ", ");
+                currentMax = currentMax.add(BigInteger.ONE);
+                if(isPrime(currentMax)) {
+                    notPrime = false;
+                }
             }
+            returnArray.add(currentMax);
         }
-        return currentDivisor;
+        return returnArray;
     }
     
-    
-
     public boolean isPrime(BigInteger number) {
         BigInteger half = (number).divide(new BigInteger("2"));
         for (BigInteger bi = half; bi.compareTo(BigInteger.ONE) > 0; bi = bi.subtract(BigInteger.ONE)) {
@@ -49,17 +43,7 @@ public class LargestPrime
         return true;
     }
 
-    public ArrayList listOfFactors(BigInteger number) {
-        ArrayList factors = new ArrayList();
-
-        for (BigInteger bi = BigInteger.valueOf(1); bi.compareTo(number) < 0; bi = bi.add(BigInteger.ONE)) {
-            if(number.mod(bi).equals(BigInteger.ZERO) && !(factors.contains(bi))) {
-                factors.add(bi);
-            }
-        }
-        return factors;
-    }
-
+    
     //Helper Functions
     public int sum(ArrayList array) {
         int arrayLength = array.size();

@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=BlockChain
+comment1.params=
+comment1.target=BlockChain()
+comment2.params=array
+comment2.target=int\ sum(java.util.ArrayList)
+comment3.params=array
+comment3.target=int\ sum(int[])
+comment4.params=array
+comment4.target=void\ printArray(int[])
+comment5.params=array
+comment5.target=void\ printArrayList(java.util.ArrayList)
+comment6.params=
+comment6.target=void\ clear()
+numComments=7

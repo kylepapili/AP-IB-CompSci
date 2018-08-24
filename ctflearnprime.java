@@ -1,52 +1,47 @@
-package Eulers;
+
 import java.util.*;
 import java.lang.Number;
 import java.math.BigInteger;
-
-/**
- * Write a description of class LargestPrime here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
-public class LargestPrime
+public class ctflearnprime
 {
-
-    /**
-     * Constructor for objects of class LargestPrime
-     */
-    public LargestPrime()
+    public ctflearnprime()
     {
+        int sum = 50847534;
         clear();
-        BigInteger number = new BigInteger("600851475143");
-        BigInteger test = new BigInteger("13195");
-        System.out.println("Largest Prime Factor: " + largestPrimeFactorQuadMethod(number));
-    }
-
-    public BigInteger largestPrimeFactorQuadMethod(BigInteger number) {
-        BigInteger a = number;
-        BigInteger currentDivisor = new BigInteger("2");
-        BigInteger largestDivisor = new BigInteger("0");
-        while(!(a.equals(BigInteger.ONE))) {
-            if(a.mod(currentDivisor).equals(BigInteger.ZERO)) { //a is divisible by b
-                a = a.divide(currentDivisor);
-            } else {
-                currentDivisor = currentDivisor.add(BigInteger.ONE);
+        for( int i=999999999; i>987163160; i=i-2) {
+            System.out.print(i + ", ");
+            BigInteger bi = BigInteger.valueOf(i);
+            if( isPrime(bi) ) {
+                sum = sum - 1;
             }
         }
-        return currentDivisor;
+
+        System.out.println("SUM: " + sum);
     }
-    
-    
 
     public boolean isPrime(BigInteger number) {
         BigInteger half = (number).divide(new BigInteger("2"));
-        for (BigInteger bi = half; bi.compareTo(BigInteger.ONE) > 0; bi = bi.subtract(BigInteger.ONE)) {
+        BigInteger root = sqrt(number);
+        for (BigInteger bi = root; bi.compareTo(BigInteger.ONE) > 0; bi = bi.subtract(BigInteger.ONE)) {
             if((number.mod(bi)).equals(BigInteger.ZERO)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static BigInteger sqrt(BigInteger x) {
+        BigInteger div = BigInteger.ZERO.setBit(x.bitLength()/2);
+        BigInteger div2 = div;
+        // Loop until we hit the same value twice in a row, or wind
+        // up alternating.
+        for(;;) {
+            BigInteger y = div.add(x.divide(div)).shiftRight(1);
+            if (y.equals(div) || y.equals(div2))
+                return y;
+            div2 = div;
+            div = y;
+        }
     }
 
     public ArrayList listOfFactors(BigInteger number) {
@@ -58,16 +53,6 @@ public class LargestPrime
             }
         }
         return factors;
-    }
-
-    //Helper Functions
-    public int sum(ArrayList array) {
-        int arrayLength = array.size();
-        int currentSum = 0;
-        for(int i = 0; i<array.size(); i++) {
-            currentSum = currentSum + ((Integer) array.get(i));
-        }
-        return currentSum;
     }
 
     public int sum(int[] array) {

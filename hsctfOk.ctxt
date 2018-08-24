@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=hsctfOk
+comment1.params=
+comment1.target=hsctfOk()
+comment2.params=
+comment2.target=void\ generateMessages()
+comment3.params=array
+comment3.target=java.util.ArrayList\ convert(char[])
+comment4.params=arrayList
+comment4.target=char[]\ convert(java.util.ArrayList)
+comment5.params=from\ to\ index
+comment5.target=char[]\ depositElements(char[],\ char[],\ int)
+comment6.params=arrayList
+comment6.target=void\ printArrayList(java.util.ArrayList)
+comment7.params=array
+comment7.target=void\ printArray(int[])
+comment8.params=
+comment8.target=void\ clear()
+numComments=9

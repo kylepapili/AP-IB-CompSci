@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=LargestProductInASeries
+comment1.params=
+comment1.target=LargestProductInASeries()
+comment2.params=amountOfDigits\ digits
+comment2.target=java.math.BigInteger\ greatestProductOfAdjacentDigits(int,\ java.util.ArrayList)
+comment3.params=numStr
+comment3.target=java.util.ArrayList\ interpretNumber(java.lang.String)
+comment4.params=array
+comment4.target=int\ sum(java.util.ArrayList)
+comment5.params=array
+comment5.target=int\ sum(int[])
+comment6.params=array
+comment6.target=void\ printArray(int[])
+comment7.params=
+comment7.target=void\ clear()
+numComments=8

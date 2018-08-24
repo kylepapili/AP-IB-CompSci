@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=hsctfReal
+comment1.params=
+comment1.target=hsctfReal()
+comment2.params=input
+comment2.target=int[]\ unshuffle4(java.lang.String)
+comment3.params=f\ add
+comment3.target=java.lang.String\ shuffle4(java.lang.String,\ int[])
+comment4.params=input
+comment4.target=int[]\ unshuffle3(int[])
+comment5.params=add
+comment5.target=int[]\ shuffle3(int[])
+comment6.params=add
+comment6.target=int[]\ shuffle2(int[])
+comment7.params=numArray
+comment7.target=java.lang.String\ unshuffle1(int[])
+comment8.params=word
+comment8.target=int[]\ shuffle1(java.lang.String)
+comment9.params=
+comment9.target=void\ clear()
+numComments=10

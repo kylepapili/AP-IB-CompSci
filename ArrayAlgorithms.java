@@ -49,6 +49,7 @@ public class ArrayAlgorithms
         System.out.println("GCF: " + gcf);
         
         //Reverse
+        printArray(userArray);
         int[] reversedArray = reverse(userArray);
         System.out.println("Reversing Array...");
         printArray(reversedArray);
