@@ -1,15 +1,19 @@
 package Solitare;
 
 /**
- * Write a description of class Card here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Card Class with all attributes, methods, and inializers
  */
+
+
 public class Card
 {
     public String suit = "";
     public int value = 0;
+    public static void main(String[] args)
+    {
+        Card testCard = new Card("Spaid", "10");
+        System.out.println(testCard.prettyName());
+    }
 
     public Card(String suit , String value)
     {
@@ -28,21 +32,29 @@ public class Card
 
     public String prettyName() {
         String name = "";
-        if (this.value < 10 && this.value > 1) { //Normal Number Card
+        if (this.value <= 10 && this.value > 1) { //Normal Number Card
             name = Integer.toString(this.value);
         } else {
             switch (this.value) {
                 case 11:
                     name = "Jack";
+                    break;
                 case 12:
                     name = "Queen";
+                    break;
                 case 13:
                     name = "King";
-                case 1:
+                    break;
+                case 14:
                     name = "Ace";
+                    break;
             }
         }
-        
+
         return (name + " of " + this.suit + "s");
+    }
+    
+    public void clear() {
+        System.out.println("\f");
     }
 }
