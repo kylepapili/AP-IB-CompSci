@@ -4,21 +4,39 @@ package Solitare;
  * Card Class with all attributes, methods, and inializers
  */
 
-
 public class Card
 {
     public String suit = "";
     public int value = 0;
-    public static void main(String[] args)
-    {
-        Card testCard = new Card("Spaid", "10");
-        System.out.println(testCard.prettyName());
-    }
+    public String name = "";
 
     public Card(String suit , String value)
     {
         this.suit = suit;
-        this.value = Integer.parseInt(value);
+        int numValue = Integer.parseInt(value);
+        if (numValue <= 10 && numValue > 1) { //Normal Number Card
+            this.name = Integer.toString(numValue);
+            this.value = numValue;
+        } else {
+            switch (numValue) {
+                case 11:
+                this.name = "Jack";
+                this.value = 10;
+                break;
+                case 12:
+                this.name = "Queen";
+                this.value = 10;
+                break;
+                case 13:
+                this.name = "King";
+                this.value = 10;
+                break;
+                case 14:
+                this.name = "Ace";
+                this.value = 10;
+                break;
+            }
+        }
     }
 
     //Accessor Methods
@@ -31,29 +49,9 @@ public class Card
     }
 
     public String prettyName() {
-        String name = "";
-        if (this.value <= 10 && this.value > 1) { //Normal Number Card
-            name = Integer.toString(this.value);
-        } else {
-            switch (this.value) {
-                case 11:
-                    name = "Jack";
-                    break;
-                case 12:
-                    name = "Queen";
-                    break;
-                case 13:
-                    name = "King";
-                    break;
-                case 14:
-                    name = "Ace";
-                    break;
-            }
-        }
-
-        return (name + " of " + this.suit + "s");
+        return (this.name + " of " + this.suit + "s");
     }
-    
+
     public void clear() {
         System.out.println("\f");
     }
