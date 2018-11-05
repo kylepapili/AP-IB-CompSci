@@ -33,7 +33,7 @@ public class Card
                 break;
                 case 14:
                 this.name = "Ace";
-                this.value = 10;
+                this.value = 1;
                 break;
             }
         }
