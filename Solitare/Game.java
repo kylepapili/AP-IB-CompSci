@@ -9,23 +9,44 @@ public class Game
     Deck discardCards = new Deck(true); //Empty
     Boolean isOver = false;
     Scanner userInput = new Scanner(System.in);
+    String endMessage = "";
     public static void main(String[] args) {
-        while (true) {
-            clear();
-            Game thisGame = new Game();
-            while (!(thisGame.isOver)) {
-                clear();
-                thisGame.promptUser();
-            } 
-            clear();
-            System.out.println("You won! Nice job!!!");
-        }
+        Game thisGame = new Game();
+        thisGame.runGame();
     }
 
     public Game()
     {
         this.cardPile.shuffle();
         this.cardsOnTable = cardPile.deal(9);
+    }
+
+    public void runGame() {
+        while (true) {
+            clear();
+            this.isOver = false;
+            while (!(this.isOver)) {
+                clear();
+                this.promptUser();
+                if (checkImpossibleWin()) {
+                    this.isOver = true;
+                    this.endMessage = "No further sums of 11 available.";
+                }
+            } 
+            clear();
+            //Do it again
+            this.cardPile = new Deck(false);
+            this.cardsOnTable = new Deck(true); //Empty
+            this.cardPile.shuffle();
+            this.cardsOnTable = cardPile.deal(9);
+            System.out.println(endMessage);
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } finally {
+                this.runGame();
+                break;
+            }
+        }
     }
 
     public boolean checkSum(int valueOne, int valueTwo) {
@@ -82,13 +103,59 @@ public class Game
             } else if(cardPile.deck.size() == 1 || cardPile.deck.size() == 2) {
                 cardsOnTable.deck.addAll((cardPile.deal(1)).deck);
             }
+        } else {
+            //Do it again
+            System.out.println("Input Error, please try again.");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } finally {
+                return;
+            }
         }
     }
 
     public void checkWin() {
         if (cardPile.deck.size() == 0 && cardsOnTable.deck.size() == 0) {
             this.isOver = true;
+            this.endMessage = "Congratulations, you won!";
+        } 
+    }
+
+    public boolean checkImpossibleWin() {
+        for ( int i = 0; i < this.cardsOnTable.deck.size(); i ++) {
+            Card thisCard = this.cardsOnTable.deck.get(i);
+            for (int j = 0; j < this.cardsOnTable.deck.size(); j++) {
+                Card cardToCompare = this.cardsOnTable.deck.get(j);
+                if (thisCard.prettyName() != cardToCompare.prettyName()) {
+                    //Cards are not the same
+                    if (thisCard.value + cardToCompare.value == 11) {
+                        return false;
+                    }
+                }
+            }
         }
+
+        for ( int i = 0; i < this.cardsOnTable.deck.size(); i ++) {
+            Card firstCard = this.cardsOnTable.deck.get(i);
+            for (int j = 0; j < this.cardsOnTable.deck.size(); j++) {
+                Card secondCard = this.cardsOnTable.deck.get(j);
+                for (int k = 0; k < this.cardsOnTable.deck.size(); k++) {
+                    Card thirdCard = this.cardsOnTable.deck.get(k);
+                    //Make sure none are the same
+                    if (!(firstCard.prettyName() == secondCard.prettyName() || firstCard.prettyName() == thirdCard.prettyName() || thirdCard.prettyName() == secondCard.prettyName())) {
+                        //Check to see that they are different names
+                        if (firstCard.name != secondCard.name && firstCard.name != thirdCard.name && secondCard.name != thirdCard.name) {
+                            if (firstCard.isFaceCard && secondCard.isFaceCard && thirdCard.isFaceCard) {
+                                if (firstCard.value + secondCard.value + thirdCard.value == 30) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public void promptUser() { 
@@ -108,7 +175,12 @@ public class Game
                 updateGame(responseIntOne, responseIntTwo); 
             } else {
                 //Do it again
-                return;
+                System.out.println("Input Error, please try again.");
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } finally {
+                    return;
+                }
             }
         } else if (decisionInt == 3) {
             System.out.println("First card you would like to remove? (1-9)");
@@ -131,6 +203,14 @@ public class Game
                 } finally {
                     return;
                 }
+            }
+        } else {
+            //Do it again
+            System.out.println("Input Error, please try again.");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } finally {
+                return;
             }
         }
     }
